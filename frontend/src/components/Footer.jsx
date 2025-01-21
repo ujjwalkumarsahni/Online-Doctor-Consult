@@ -1,6 +1,6 @@
 import React from "react";
 import { assets } from "../assets/assets";
-import Contact from "./../pages/Contact";
+
 
 const Footer = () => {
   return (
@@ -41,7 +41,7 @@ const Footer = () => {
       {/* copyright */}
       <div>
         <hr />
-        <p className="text-sm text-center py-5">Copyright © 2024 GreatStack - All Right Reserved.</p>
+        <p className="text-sm text-center py-5">Copyright © 2025 UjjwalKumar - All Right Reserved.</p>
       </div>
     </div>
   );
