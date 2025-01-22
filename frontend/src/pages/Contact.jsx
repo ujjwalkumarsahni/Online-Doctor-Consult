@@ -1,8 +1,10 @@
 import React from 'react'
 import { assets } from './../assets/assets';
+import Footer from '../components/Footer';
 
 const Contact = () => {
   return (
+    <>
     <div>
       
       <div className='text-center text-2xl pt-10 text-gray-600'> 
@@ -24,6 +26,8 @@ const Contact = () => {
       </div>
 
     </div>
+    <Footer />
+    </>
   )
 }
 

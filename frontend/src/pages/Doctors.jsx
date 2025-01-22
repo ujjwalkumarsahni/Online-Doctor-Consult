@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "./../context/AppContext";
+import Footer from "../components/Footer";
 const Doctors = () => {
   const navigate = useNavigate();
   const { speciality } = useParams();
@@ -21,6 +22,7 @@ const Doctors = () => {
   },[doctors,speciality])
 
   return (
+    <>
     <div>
       <p className="text-gray-600">Browse through the doctors specialist.</p>
       <div className="flex flex-col sm:flex-row items-start gap-5 mt-5">
@@ -53,6 +55,8 @@ const Doctors = () => {
         </div>
       </div>
     </div>
+    <Footer />
+</>
   );
 };
 
