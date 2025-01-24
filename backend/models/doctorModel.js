@@ -10,9 +10,9 @@ const doctorSchema = mongoose.Schema(
     degree: { type: String, required: true },
     experience: { type: String, required: true },
     about: { type: String, required: true },
-    available: { type: Boolean, required: true },
+    available: { type: Boolean, default: true },
     fees: { type: Number, required: true },
-    address: { type: String, required: true },
+    address: { type: Object, required: true },
     date: { type: Number, required: true },
     slots_booked: { type: Object, default: {} },
   },
@@ -22,4 +22,4 @@ const doctorSchema = mongoose.Schema(
 const doctorModel =
   mongoose.models.doctor || mongoose.model("doctor", doctorSchema);
 
-export { doctorModel };
+export default doctorModel;

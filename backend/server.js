@@ -20,7 +20,7 @@ app.use('/api/admin', adminRouter);
 
 
 app.get('/', (req,res) => {
-    res.send("App working fine");
+    res.send('hello')
 })
 
 app.listen(port, ()=> {
