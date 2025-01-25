@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 export const AdminContext = createContext();
 
-const AdminContextProvider = (props) =>{
+const AdminContextProvider = (props) => {
 
     const value = {
 
@@ -10,9 +10,9 @@ const AdminContextProvider = (props) =>{
 
     return (
         <AdminContext.Provider value={value}>
-            {props.childern}
+            {props.children}
         </AdminContext.Provider>
-    )
+    );
 }
 
 export default AdminContextProvider;
