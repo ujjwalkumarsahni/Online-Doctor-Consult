@@ -1,5 +1,8 @@
 import React from 'react';
 import {Routes,Route} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Doctors from './pages/Doctors.jsx';
@@ -13,6 +16,7 @@ import Navbar from './components/Navbar.jsx';
 const App = () => {
   return (
     <div className='mx-4 sm:mx-[4%]'>
+      <ToastContainer />
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />}/>
