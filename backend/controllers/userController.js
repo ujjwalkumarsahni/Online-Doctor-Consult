@@ -112,4 +112,17 @@ const loginUser = async (req, res) => {
       });
     }
   };
-export { registerUser, loginUser};
+
+// api for profile details
+const getProfile = async (req,res) =>{
+  try {
+    const {userId} = req.body;
+    const userData = await userModel.findById(userId).select('-password')
+    res.status(201).json({success: true, userData})
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+export { registerUser, loginUser,getProfile};
