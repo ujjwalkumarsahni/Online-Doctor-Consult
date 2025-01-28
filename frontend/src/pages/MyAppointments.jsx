@@ -1,15 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './../context/AppContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const MyAppointments = () => {
-  const { doctors } = useContext(AppContext);
+  const { backendUrl,token } = useContext(AppContext);
+  const [appointments,setAppointments] = useState([]);
+
+  const getUserAppointments = async () =>{
+    try {
+      const {data} = await axios.get(`${backendUrl}/api/user/appointments`,{headers: {token}})
+      if(data.success){
+        setAppointments(data.appointments.reverse())
+        console.log(data.appointments);
+        
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  }
+
+  useEffect(()=> {
+    if(token){
+      getUserAppointments();
+    }
+  },[token])
+
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white mt-10">
       <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
         My Appointments
       </h1>
       <div className="space-y-6">
-        {doctors.slice(0, 3).map((item, index) => (
+        {appointments.map((item, index) => (
           <div
             key={index}
             className="flex flex-col sm:flex-row items-center sm:items-start bg-gray-50 p-4 rounded-md shadow-md"
