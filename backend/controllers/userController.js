@@ -130,14 +130,14 @@ const getProfile = async (req,res) =>{
 // api to update Profile
 const updateProfile = async (req,res) =>{
   try {
-    const {userId,name,email,address,dob,gender,phone} = req.body;
+    const {userId,name,address,dob,gender,phone} = req.body;
     const imageFile = req.file
 
-    if(!name || !email || !dob || !gender || !phone){
+    if(!name || !dob || !gender || !phone){
       res.status(400).json({success: false,message: "Data Missing"})
     }
 
-    await userModel.findByIdAndUpdate(userId,{name,phone,email,address: JSON.parse(address),dob,gender})
+    await userModel.findByIdAndUpdate(userId,{name,phone,address: JSON.parse(address),dob,gender})
 
     if(imageFile){
       // uploade in cloudinary

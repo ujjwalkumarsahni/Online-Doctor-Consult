@@ -30,10 +30,7 @@ const AppContextProvider = (props) =>{
     }
     const UploadUserProfileData = async () => {
         try {
-            const { data } = await axios.get(
-                `${backendUrl}/api/user/get-profile`, {}, // Empty object as the second argument for the request body
-                { headers: { token } } // Pass headers as the third argument
-            );
+            const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, { headers: { token } } );
             if (data.success) {
                 setUserData(data.userData);
             } else {
@@ -45,7 +42,7 @@ const AppContextProvider = (props) =>{
         }
     };
     const value = {
-        doctors,currencySymbol,token,setToken,backendUrl,userData,setUserData
+        doctors,currencySymbol,token,setToken,backendUrl,userData,setUserData,UploadUserProfileData
     }
 
     useEffect(()=>{
