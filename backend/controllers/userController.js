@@ -1,6 +1,7 @@
 import validator from "validator";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {v2 as cloudinary} from 'cloudinary'
 import { userModel } from "../models/userModel.js";
 
 // API to register user
@@ -125,4 +126,30 @@ const getProfile = async (req,res) =>{
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
-export { registerUser, loginUser,getProfile};
+
+// api to update Profile
+const updateProfile = async (req,res) =>{
+  try {
+    const {userId,name,email,address,dob,gender,phone} = req.body;
+    const imageFile = req.file
+
+    if(!name || !email || !dob || !gender || !phone){
+      res.status(400).json({success: false,message: "Data Missing"})
+    }
+
+    await userModel.findByIdAndUpdate(userId,{name,phone,email,address: JSON.parse(address),dob,gender})
+
+    if(imageFile){
+      // uploade in cloudinary
+      const imageUpload = await cloudinary.uploader.upload(imageFile.path,{resource_type: "image"})
+      const imageURL = imageUpload.secure_url
+      await userModel.findByIdAndUpdate(userId,{image: imageURL});
+    }
+    res.status(201).json({success: true,message: "Profile updated"})
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+}
+export { registerUser, loginUser,getProfile,updateProfile};

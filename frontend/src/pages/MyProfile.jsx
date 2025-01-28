@@ -1,27 +1,21 @@
-import React, { useState } from "react";
-import { assets } from "./../assets/assets";
+import React, { useContext, useState } from "react";
 import Footer from "../components/Footer";
+import { AppContext } from "../context/AppContext";
 
 const MyProfile = () => {
-  const [userData, setUserData] = useState({
-    name: "Edward Vincent",
-    image: assets.profile_pic,
-    email: "richardjameswap@gmail.com",
-    phone: "+1  123 456 7890",
-    address: {
-      line1: "57th Cross, Richmond ",
-      line2: "Circle, Church Road, London",
-    },
-    gender: "Male",
-    dob: "2000-01-20",
-  });
+  const { userData, setUserData } = useContext(AppContext);
   const [isEdit, setIsEdit] = useState(false);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md mt-10">
         <div className="flex flex-col items-center sm:flex-row sm:items-start">
           <img
-            src={userData.image}
+            src={userData.image || "default-profile.png"} // Fallback for image
             alt="Profile"
             className="w-32 h-32 rounded-full border-2 border-gray-200"
           />
@@ -29,7 +23,7 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="text"
-                value={userData.name}
+                value={userData.name || ""}
                 className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, name: e.target.value }))
@@ -37,7 +31,7 @@ const MyProfile = () => {
               />
             ) : (
               <h2 className="text-xl font-bold text-gray-800">
-                {userData.name}
+                {userData.name || "No Name"}
               </h2>
             )}
           </div>
@@ -51,14 +45,14 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="email"
-                value={userData.email}
+                value={userData.email || ""}
                 className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, email: e.target.value }))
                 }
               />
             ) : (
-              <p className="text-gray-800">{userData.email}</p>
+              <p className="text-gray-800">{userData.email || "No Email"}</p>
             )}
           </div>
           <div>
@@ -66,14 +60,14 @@ const MyProfile = () => {
             {isEdit ? (
               <input
                 type="text"
-                value={userData.phone}
+                value={userData.phone || ""}
                 className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
                 onChange={(e) =>
                   setUserData((prev) => ({ ...prev, phone: e.target.value }))
                 }
               />
             ) : (
-              <p className="text-gray-800">{userData.phone}</p>
+              <p className="text-gray-800">{userData.phone || "No Phone"}</p>
             )}
           </div>
           <div className="col-span-2">
@@ -82,7 +76,7 @@ const MyProfile = () => {
               <div className="space-y-2">
                 <input
                   type="text"
-                  value={userData.address.line1}
+                  value={userData.address?.line1 || ""}
                   className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
                   onChange={(e) =>
                     setUserData((prev) => ({
@@ -93,7 +87,7 @@ const MyProfile = () => {
                 />
                 <input
                   type="text"
-                  value={userData.address.line2}
+                  value={userData.address?.line2 || ""}
                   className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
                   onChange={(e) =>
                     setUserData((prev) => ({
@@ -105,49 +99,14 @@ const MyProfile = () => {
               </div>
             ) : (
               <p className="text-gray-800">
-                {userData.address.line1} <br />
-                {userData.address.line2}
+                {userData.address?.line1 || "No Address"} <br />
+                {userData.address?.line2 || ""}
               </p>
             )}
           </div>
         </div>
 
         <hr className="my-6 border-gray-300" />
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <h3 className="font-medium text-gray-600">Gender:</h3>
-            {isEdit ? (
-              <select
-                value={userData.gender}
-                className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
-                onChange={(e) =>
-                  setUserData((prev) => ({ ...prev, gender: e.target.value }))
-                }
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            ) : (
-              <p className="text-gray-800">{userData.gender}</p>
-            )}
-          </div>
-          <div>
-            <h3 className="font-medium text-gray-600">Birthday:</h3>
-            {isEdit ? (
-              <input
-                type="date"
-                value={userData.dob}
-                className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
-                onChange={(e) =>
-                  setUserData((prev) => ({ ...prev, dob: e.target.value }))
-                }
-              />
-            ) : (
-              <p className="text-gray-800">{userData.dob}</p>
-            )}
-          </div>
-        </div>
 
         <div className="flex justify-end mt-6">
           {isEdit ? (
