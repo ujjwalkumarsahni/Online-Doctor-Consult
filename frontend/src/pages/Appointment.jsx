@@ -60,7 +60,7 @@ const Appointment = () => {
         const day = currentDate.getDate();
         const month = currentDate.getMonth() + 1;
         const year = currentDate.getFullYear();
-        const slotDate = `${day}_${month}_${year}`;
+        const slotDate = `${day}-${month}-${year}`;
         const slotTime = formattedTime
         
         const isSlotAvailable = docInfo?.slots_booked?.[slotDate]?.includes(slotTime) ? false : true;
@@ -90,7 +90,7 @@ const Appointment = () => {
       const day = date.getDate();
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
-      const slotDate = `${day}_${month}_${year}`;
+      const slotDate = `${day}-${month}-${year}`;
 
       console.log(slotDate);
       

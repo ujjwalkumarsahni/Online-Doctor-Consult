@@ -1,32 +1,57 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from './../context/AppContext';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "./../context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const MyAppointments = () => {
-  const { backendUrl,token } = useContext(AppContext);
-  const [appointments,setAppointments] = useState([]);
+  const { backendUrl, token,getDoctorsData } = useContext(AppContext);
+  const [appointments, setAppointments] = useState([]);
+  const months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
-  const getUserAppointments = async () =>{
+  const slotDataFormat = (slotDate) =>{
+    const dateArray = slotDate.split('-')
+    return dateArray[0]+ " "+ months[Number(dateArray[1])] + " " +  dateArray[2]
+  }
+  const getUserAppointments = async () => {
     try {
-      const {data} = await axios.get(`${backendUrl}/api/user/appointments`,{headers: {token}})
-      if(data.success){
-        setAppointments(data.appointments.reverse())
-        console.log(data.appointments);
-        
+      const { data } = await axios.get(`${backendUrl}/api/user/appointments`, {
+        headers: { token },
+      });
+      if (data.success) {
+        setAppointments(data.appointments.reverse());
       }
-
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
-  }
+  };
 
-  useEffect(()=> {
-    if(token){
+  const cancelAppointment = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/user/cancel-appointment`,
+        { appointmentId },
+        { headers: { token } }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        getUserAppointments();
+        getDoctorsData()
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
       getUserAppointments();
     }
-  },[token])
+  }, [token]);
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white mt-10">
@@ -42,38 +67,40 @@ const MyAppointments = () => {
             {/* Doctor Image */}
             <div className="flex-shrink-0 mb-4 sm:mb-0">
               <img
-                src={item.image}
-                alt={item.name}
+                src={item.DocData.image}
+                alt={item.DocData.name}
                 className="w-24 h-24 rounded-full border-2 border-gray-200"
               />
             </div>
-            
+
             {/* Doctor Details */}
             <div className="sm:ml-6 flex-1 text-center sm:text-left">
-              <h2 className="text-lg font-semibold text-gray-800">{item.name}</h2>
-              <p className="text-gray-600">{item.speciality}</p>
+              <h2 className="text-lg font-semibold text-gray-800">
+                {item.DocData.name}
+              </h2>
+              <p className="text-gray-600">{item.DocData.speciality}</p>
               <div className="mt-2 text-gray-600">
                 <p className="font-medium">Address:</p>
-                <p>{item.address.line1}</p>
-                <p>{item.address.line2}</p>
+                <p>{item.DocData.address.line1}</p>
+                <p>{item.DocData.address.line2}</p>
               </div>
               <p className="mt-2 text-gray-800">
-                <span className="font-semibold">Date & Time:</span> 25, July, 2024 | 8:30 PM
+                <span className="font-semibold">Date & Time:</span>{" "}
+                {slotDataFormat(item.slotDate)} | {item.slotTime}
               </p>
             </div>
-            
+
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-0">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
-              >
-                Pay Online
-              </button>
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-200"
-              >
-                Cancel Appointment
-              </button>
+              {
+                !item.cancelled && <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">Pay Online</button>
+              }
+              {
+                !item.cancelled && <button onClick={() => cancelAppointment(item._id)} className="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-200">Cancel Appointment</button>
+              }
+              {
+                item.cancelled && <button className="text-red-500 px-4 py-2 hover:text-red-600 ">Appointment cancelled</button>
+              }
             </div>
           </div>
         ))}
