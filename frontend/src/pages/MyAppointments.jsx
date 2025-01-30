@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "./../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import {useNavigate} from 'react-router-dom'
 
 const MyAppointments = () => {
   const { backendUrl, token,getDoctorsData } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
   const months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-
+  const navigate =  useNavigate()
   const slotDataFormat = (slotDate) =>{
     const dateArray = slotDate.split('-')
     return dateArray[0]+ " "+ months[Number(dateArray[1])] + " " +  dateArray[2]
@@ -46,6 +47,55 @@ const MyAppointments = () => {
       toast.error(error.message);
     }
   };
+  const initPay = (order) =>{
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Appointment Payment',
+      description: 'Appointment Payment',
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (response)=>{
+        console.log(response);
+
+        try {
+          const { data } = await axios.post(
+            `${backendUrl}/api/user/verifyRazorpay`,
+            response ,
+            { headers: { token } }
+          );
+          if(data.success){
+            getUserAppointments()
+            navigate('/my-appointments')
+          }
+    
+        } catch (error) {
+          console.log(error);
+          toast.error(error.message);
+        }
+      }
+    }
+
+    const rzp = new window.Razorpay(options)
+    rzp.open()
+  }
+  const appointmentRazorpay = async (appointmentId) =>{
+    try {
+      const { data } = await axios.post(
+        `${backendUrl}/api/user/payment-razorpay`,
+        { appointmentId },
+        { headers: { token } }
+      );
+      if(data.success){
+        initPay(data.order);
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
 
   useEffect(() => {
     if (token) {
@@ -93,7 +143,7 @@ const MyAppointments = () => {
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-0">
               {
-                !item.cancelled && <button className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">Pay Online</button>
+                !item.cancelled && <button onClick={()=> appointmentRazorpay(item._id)} className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">Pay Online</button>
               }
               {
                 !item.cancelled && <button onClick={() => cancelAppointment(item._id)} className="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-200">Cancel Appointment</button>
