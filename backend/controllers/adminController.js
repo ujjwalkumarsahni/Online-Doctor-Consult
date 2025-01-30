@@ -107,4 +107,34 @@ const appointmentsAdmin = async (req,res) =>{
         res.status(500).json({ success: false, message: "Server error, please try again later" });
     }
 }
-export { addDoctor, loginAdmin, allDoctors,appointmentsAdmin};
+
+const appointmentCancel = async (req, res) => {
+    try {
+      const {appointmentId } = req.body;
+  
+      const appointmentData = await appointmentModel.findById(appointmentId);
+  
+      await appointmentModel.findByIdAndUpdate(appointmentId, {
+        cancelled: true,
+      });
+  
+      // releasing doctor slot
+      const { docId, slotDate, slotTime } = appointmentData;
+      const doctorData = await doctorModel.findById(docId);
+  
+      let slots_booked = doctorData.slots_booked;
+  
+      slots_booked[slotDate] = slots_booked[slotDate].filter(
+        (e) => e !== slotTime
+      );
+  
+      await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+  
+      res.status(201).json({ success: true, message: "Appointment Cancelled" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: error.message });
+    }
+  };
+
+export { addDoctor, loginAdmin, allDoctors,appointmentsAdmin,appointmentCancel};
