@@ -23,26 +23,19 @@ const Login = () => {
                 setAToken(data.token)
             }
             else{
-                toast.error("Invalid email or password!", {
-                    position: "top-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  });
+                toast.error("Invalid email or password!")
             }
         }else{
-
+          // toast.error("Invalid email or password!")
         }
     } catch (error) {
         console.log(error.message);
+        toast.error("Invalid email or password!")
     }
   }
 
   return (
-    <form onSubmit={onSubmitHandler} className="min-h-[80vh] flex items-center justify-center bg-gray-50">
+    <form onSubmit={onSubmitHandler} className="min-h-[100vh] flex items-center justify-center bg-gray-50">
       <div className="flex flex-col gap-5 items-start m-auto min-w-[340px] sm:min-w-[400px] p-8 border rounded-2xl bg-white text-gray-700 shadow-lg">
         <p className="text-2xl font-semibold text-center w-full">
           <span className="text-blue-600">{state}</span> Login
