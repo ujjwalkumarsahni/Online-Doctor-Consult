@@ -3,6 +3,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { AdminContext } from "../context/AdminContext.jsx";
 import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext.jsx";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
@@ -11,6 +12,8 @@ const Login = () => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const {setAToken,backendUrl} = useContext(AdminContext)
+  const {setDToken} = useContext(DoctorContext)
+
   const onSubmitHandler = async (event) =>{
     event.preventDefault()
 
@@ -26,7 +29,15 @@ const Login = () => {
                 toast.error("Invalid email or password!")
             }
         }else{
-          // toast.error("Invalid email or password!")
+          const {data} = await axios.post(backendUrl + '/api/doctor/login' ,{email,password})
+            if(data.success){
+                localStorage.setItem('dToken',data.token)
+                console.log(data.token);
+                setDToken(data.token)
+            }
+            else{
+                toast.error("Invalid email or password!")
+            }
         }
     } catch (error) {
         console.log(error.message);
