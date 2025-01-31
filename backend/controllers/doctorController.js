@@ -155,7 +155,7 @@ const doctorDashboard = async (req, res) => {
     let patients = [];
 
     appointments.map((item) => {
-      if (patients.includes(item.userId)) {
+      if (!patients.includes(item.userId)) {
         patients.push(item.userId);
       }
     });
@@ -179,6 +179,47 @@ const doctorDashboard = async (req, res) => {
   }
 };
 
+// api to get doctor profile for doctor panel
+const doctorProfile = async (req,res) =>{
+  try {
+    const {docId} = req.body
+
+    const profileData = await doctorModel.findById(docId).select('-password')
+
+    res.status(200).json({success: true,profileData})
+
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Server error, please try again later",
+      });
+  }
+}
+
+// api to update the doctor profile from doctor panel
+const updateDoctorProfile = async (req,res) =>{
+  try {
+    const {docId, fees,address,available} = req.body
+
+    await doctorModel.findByIdAndUpdate(docId,{fees,address,available})
+
+    res.status(200).json({success: true, message: "Profile Updated"})
+
+
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Server error, please try again later",
+      });
+  }
+}
+
 export {
   changeAvailablity,
   doctorList,
@@ -187,4 +228,6 @@ export {
   appointmentCompleted,
   appointmentCancel,
   doctorDashboard,
+  doctorProfile,
+  updateDoctorProfile
 };

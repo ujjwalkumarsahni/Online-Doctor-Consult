@@ -4,8 +4,8 @@ import { assets } from './../../assets/assets.js';
 import { AppContext } from '../../context/AppContext.jsx';
 
 const DoctorDashboard = () => {
-  const { dToken, DashboardData, setDashboardData, getDashboardData } = useContext(DoctorContext)
-  const { slotDataFormat,currency } = useContext(AppContext)
+  const { dToken, DashboardData, setDashboardData, getDashboardData, CancelAppointment, CompleteAppointment } = useContext(DoctorContext)
+  const { slotDataFormat, currency } = useContext(AppContext)
   useEffect(() => {
     if (dToken) {
       getDashboardData()
@@ -15,7 +15,7 @@ const DoctorDashboard = () => {
     <div className='m-5'>
       <div className='flex flex-wrap gap-3'>
         <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
-          <img className='w-14' src={assets.doctor_icon} alt="" />
+          <img className='w-14' src={assets.earning_icon} alt="" />
           <div>
             <p className='text-xl font-semibold text-gray-600'>{currency}{DashboardData.earnings}</p>
             <p className='text-gray-500'>Earnings</p>
@@ -50,24 +50,24 @@ const DoctorDashboard = () => {
             DashboardData.latestAppointments.map((item, index) => (
               <div key={index} className='flex items-center px-6 py-3 gap-3 hover:bg-gray-200'>
                 {/* Doctor Image */}
-                <img className='w-10 rounded-full bg-gray-100' src={item?.DocData?.image} alt={item?.DocData?.name} />
+                <img className='w-10 rounded-full bg-gray-100' src={item?.userData?.image} alt={item?.userData?.name} />
                 <div className='flex-1 text-sm'>
-                  <p className='font-medium text-gray-800'>{item?.DocData?.name}</p>
+                  <p className='font-medium text-gray-800'>{item?.userData?.name}</p>
                   <p className='text-sm text-gray-600'>{slotDataFormat(item?.slotDate)}</p>
                 </div>
 
 
                 {/* Cancel Button / Status */}
-                {item?.cancelled ? (
-                  <p className="text-red-500 text-xs font-semibold">Cancelled</p>
-                ) : (
-                  <img
-                    onClick={() => cancleAppointment(item?._id)}
-                    className="w-8 h-8 cursor-pointer hover:scale-105 transition"
-                    src={assets.cancel_icon}
-                    alt="Cancel"
-                  />
-                )}
+                {
+                  item.cancelled
+                    ? <p className='text-red-400 text-xs font-medium'>Cancelled</p>
+                    : item.isCompleted
+                      ? <p className='text-green-500 text-xs font-medium'>Completed</p>
+                      : <div className="flex items-center gap-2">
+                        <img onClick={() => CancelAppointment(item._id)} className="w-10 cursor-pointer hover:scale-105 transition" src={assets.cancel_icon} alt="Cancel" />
+                        <img onClick={() => CompleteAppointment(item._id)} className="w-10 cursor-pointer hover:scale-105 transition" src={assets.tick_icon} alt="tick_icon" />
+                      </div>
+                }
               </div>
             ))
           ) : (

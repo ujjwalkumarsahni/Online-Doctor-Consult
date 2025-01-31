@@ -47,14 +47,16 @@ const AllAppointments = () => {
               <div className="flex items-center gap-2">
                 {item.cancelled ? (
                   <p className="text-red-500 text-xs font-semibold">Cancelled</p>
-                ) : (
-                  <img
-                    onClick={()=> cancleAppointment(item._id)}
-                    className="w-8 h-8 cursor-pointer hover:scale-105 transition"
-                    src={assets.cancel_icon}
-                    alt="Cancel"
-                  />
-                )}
+                ) : item.isCompleted
+                  ? <p className='text-green-500 text-xs font-semibold'>Completed</p>
+                  : (
+                    <img
+                      onClick={() => cancleAppointment(item._id)}
+                      className="w-8 h-8 cursor-pointer hover:scale-105 transition"
+                      src={assets.cancel_icon}
+                      alt="Cancel"
+                    />
+                  )}
               </div>
             </li>
           ))}

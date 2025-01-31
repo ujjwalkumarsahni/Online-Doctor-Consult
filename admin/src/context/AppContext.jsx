@@ -3,6 +3,7 @@ import { createContext } from "react";
 export const AppContext = createContext()
 
 const AppContextProvider = (props) => {
+    const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const currency = '$'
     const calculateAge = (dob) => {
@@ -20,7 +21,7 @@ const AppContextProvider = (props) => {
     }
 
     const value = {
-        calculateAge,slotDataFormat,currency
+        calculateAge,slotDataFormat,currency,backendUrl
     }
 
     return (

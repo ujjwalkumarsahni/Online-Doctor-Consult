@@ -54,24 +54,26 @@ const Dashboard = () => {
             DashboardData.latestAppointments.map((item, index) => (
               <div key={index} className='flex items-center px-6 py-3 gap-3 hover:bg-gray-200'>
                 {/* Doctor Image */}
-                  <img className='w-10 rounded-full bg-gray-100' src={item?.DocData?.image} alt={item?.DocData?.name} />
-                  <div className='flex-1 text-sm'>
-                    <p className='font-medium text-gray-800'>{item?.DocData?.name}</p>
-                    <p className='text-sm text-gray-600'>{slotDataFormat(item?.slotDate)}</p>
-                  </div>
-              
+                <img className='w-10 rounded-full bg-gray-100' src={item?.DocData?.image} alt={item?.DocData?.name} />
+                <div className='flex-1 text-sm'>
+                  <p className='font-medium text-gray-800'>{item?.DocData?.name}</p>
+                  <p className='text-sm text-gray-600'>{slotDataFormat(item?.slotDate)}</p>
+                </div>
+
 
                 {/* Cancel Button / Status */}
-                {item?.cancelled ? (
+                {item.cancelled ? (
                   <p className="text-red-500 text-xs font-semibold">Cancelled</p>
-                ) : (
-                  <img
-                    onClick={() => cancleAppointment(item?._id)}
-                    className="w-8 h-8 cursor-pointer hover:scale-105 transition"
-                    src={assets.cancel_icon}
-                    alt="Cancel"
-                  />
-                )}
+                ) : item.isCompleted
+                  ? <p className='text-green-500 text-xs font-semibold'>Completed</p>
+                  : (
+                    <img
+                      onClick={() => cancleAppointment(item._id)}
+                      className="w-8 h-8 cursor-pointer hover:scale-105 transition"
+                      src={assets.cancel_icon}
+                      alt="Cancel"
+                    />
+                  )}
               </div>
             ))
           ) : (
