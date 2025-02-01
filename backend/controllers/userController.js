@@ -5,7 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { userModel } from "../models/userModel.js";
 import doctorModel from "./../models/doctorModel.js";
 import appointmentModel from "../models/AppointmentModel.js";
-import Razorpay from "razorpay";
+// import Razorpay from "razorpay";
 
 // API to register user
 const registerUser = async (req, res) => {
