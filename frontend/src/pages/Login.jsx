@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext.jsx";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {createPortal} from 'react-dom'
 import { X } from "lucide-react"; 
 
 const Login = ({ isOpen, setIsOpen }) => {
@@ -80,7 +81,7 @@ const Login = ({ isOpen, setIsOpen }) => {
   }, [token]);
 
   return (
-    <div
+    createPortal(<div
       onClick={() => setIsOpen(false)}
       className={`fixed inset-0 min-h-[80vh] flex items-center justify-center z-40 bg-black/60 ${isOpen ? "block" : "hidden"}`}
     >
@@ -143,7 +144,7 @@ const Login = ({ isOpen, setIsOpen }) => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full text-base bg-primary text-white rounded-md py-2 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-full cursor-pointer text-base bg-primary text-white rounded-md py-2 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           {loading ? "Processing..." : state === "Sign Up" ? "Create Account" : "Login"}
         </button>
@@ -170,7 +171,8 @@ const Login = ({ isOpen, setIsOpen }) => {
           </p>
         )}
       </form>
-    </div>
+    </div>,
+    document.getElementById('portal'))
   );
 };
 
