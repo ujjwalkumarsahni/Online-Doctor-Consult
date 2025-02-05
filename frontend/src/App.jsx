@@ -4,7 +4,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 import Home from './pages/Home.jsx';
-import Login from './pages/Login.jsx';
 import Doctors from './pages/Doctors.jsx';
 import About from './pages/About.jsx';
 import Contact from './pages/Contact.jsx';
@@ -20,7 +19,6 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />}/>
-        <Route path='/login' element={<Login />}/>
         <Route path='/doctors' element={<Doctors />}/>
         <Route path="/doctors/:speciality" element={<Doctors />}/>
         <Route path='/about' element={<About />}/>

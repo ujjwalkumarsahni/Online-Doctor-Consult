@@ -2,8 +2,10 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { assets } from './../assets/assets.js';
 import { AppContext } from "../context/AppContext.jsx";
+import Login from './../pages/Login.jsx';
 
 const Navbar = () => {
+  const [isOpen,setIsOpen] = useState(false)
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const { token, setToken, userData } = useContext(AppContext)
@@ -51,7 +53,10 @@ const Navbar = () => {
 
             </div>
 
-            : <button onClick={() => navigate('/login')} className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block">Create account</button>
+            : <div><button onClick={()=> setIsOpen(true)}  className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block">Create account</button>
+            <Login isOpen={isOpen} setIsOpen={setIsOpen}/>
+            </div>
+            
         }
         <button
           onClick={() => (window.location.href = "https://online-doctor-consult-admin-panel.onrender.com/")}
