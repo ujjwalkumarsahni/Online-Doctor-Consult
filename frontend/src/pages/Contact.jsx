@@ -7,20 +7,20 @@ const Contact = () => {
     <>
     <div>
       
-      <div className='text-center text-2xl pt-10 text-gray-600'> 
-          <p>CONTACT <span className='font-medium text-gray-700'>US</span></p>
+      <div className='text-center text-2xl pt-10 text-gray-600 dark:text-white'> 
+          <p>CONTACT <span className='font-medium text-gray-700 dark:text-gray-200'>US</span></p>
       </div>
 
       <div className='my-10 flex flex-col md:flex-row justify-center gap-10 mb-28 text-sm'>
 
         <img className='w-full md:max-w-[360px]' src={assets.contact_image} alt="" />
         <div className='flex flex-col items-start gap-6 justify-center'>
-          <p className='font-semibold text-lg text-gray-600'>Our OFFICE</p>
-          <p className='text-gray-500'>54709 Willms Station <br />Suite 350, Washington, USA</p>
-          <p className='text-gray-500'>Tel: (415) 555‑0132 <br /> Email: greatstackdev@gmail.com</p>
-          <p className='font-semibold text-lg text-gray-600'>Careers at PRESCRIPTO</p>
-          <p className='text-gray-500'>Learn more about our teams and job openings.</p>
-          <button className='border border-black px-7 py-3 text-sm hover:bg-black hover:text-white transition-all duration-500'>Explore Jobs</button>
+          <p className='font-semibold text-lg text-gray-600 dark:text-white'>Our OFFICE</p>
+          <p className='text-gray-500 dark:text-gray-200'>54709 Willms Station <br />Suite 350, Washington, USA</p>
+          <p className='text-gray-500 dark:text-gray-200'>Tel: (415) 555‑0132 <br /> Email: greatstackdev@gmail.com</p>
+          <p className='font-semibold text-lg text-gray-600 dark:text-gray-200'>Careers at PRESCRIPTO</p>
+          <p className='text-gray-500 dark:text-gray-200'>Learn more about our teams and job openings.</p>
+          <button className='border border-black px-7 py-3 text-sm hover:bg-black hover:text-white transition-all duration-500 dark:border-white'>Explore Jobs</button>
         </div>
 
       </div>

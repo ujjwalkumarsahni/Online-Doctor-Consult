@@ -3,6 +3,7 @@ import { AppContext } from "./../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
+import Footer from "../components/Footer";
 
 const MyAppointments = () => {
   const { backendUrl, token, getDoctorsData } = useContext(AppContext);
@@ -104,15 +105,15 @@ const MyAppointments = () => {
   }, [token]);
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white mt-10">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+    <div className="max-w-6xl mx-auto p-6  mt-10">
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
         My Appointments
       </h1>
       <div className="space-y-6">
         {appointments.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col sm:flex-row items-center sm:items-start bg-gray-50 p-4 rounded-md shadow-md"
+            className="flex flex-col sm:flex-row items-center sm:items-start bg-gray-50 p-4 rounded-md shadow-md dark:bg-gray-900"
           >
             {/* Doctor Image */}
             <div className="flex-shrink-0 mb-4 sm:mb-0">
@@ -125,30 +126,30 @@ const MyAppointments = () => {
 
             {/* Doctor Details */}
             <div className="sm:ml-6 flex-1 text-center sm:text-left">
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
                 {item.DocData.name}
               </h2>
-              <p className="text-gray-600">{item.DocData.speciality}</p>
-              <div className="mt-2 text-gray-600">
+              <p className="text-gray-600 dark:text-gray-200">{item.DocData.speciality}</p>
+              <div className="mt-2 text-gray-600 dark:text-gray-200">
                 <p className="font-medium">Address:</p>
                 <p>{item.DocData.address.line1}</p>
                 <p>{item.DocData.address.line2}</p>
               </div>
-              <p className="mt-2 text-gray-800">
+              <p className="mt-2 text-gray-800 dark:text-white">
                 <span className="font-semibold">Date & Time:</span>{" "}
                 {slotDataFormat(item.slotDate)} | {item.slotTime}
               </p>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-0">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 mt-4 sm:mt-0">
               {
                 item.isCompleted
                   ? <button className="text-green-500 px-4 py-2 hover:text-green-600">Completed</button>
                   : item.cancelled
                     ? <button className="text-red-500 px-4 py-2 hover:text-red-600 ">Appointment cancelled</button>
                     : <div className="flex- gap-2">
-                      <button onClick={()=> appointmentRazorpay(item._id)} className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">Pay Online</button>
+                      <button onClick={()=> appointmentRazorpay(item._id)} className="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200 mr-1">Pay Online</button>
                       <button onClick={() => cancelAppointment(item._id)} className="bg-red-500 text-white px-4 py-2 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-200">Cancel Appointment</button>
                     </div>
               }
@@ -166,6 +167,8 @@ const MyAppointments = () => {
           </div>
         ))}
       </div>
+
+      <Footer />
     </div>
   );
 };

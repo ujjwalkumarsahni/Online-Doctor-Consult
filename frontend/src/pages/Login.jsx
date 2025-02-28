@@ -88,13 +88,13 @@ const Login = ({ isOpen, setIsOpen }) => {
       <form
         onClick={(e) => e.stopPropagation()}
         onSubmit={onSubmitHandler}
-        className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg bg-white relative"
+        className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg bg-white dark:bg-gray-900 dark:text-white relative"
       >
         {/* Close Icon */}
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="absolute top-3 right-3 text-zinc-500 hover:text-zinc-700"
+          className="absolute top-3 right-3 text-zinc-500 dark:text-white hover:text-zinc-700"
         >
           <X size={24} />
         </button>
@@ -107,7 +107,7 @@ const Login = ({ isOpen, setIsOpen }) => {
           <div className="w-full">
             <p>Full Name</p>
             <input
-              className="border border-zinc-300 rounded w-full p-2 mt-1"
+              className="border border-zinc-300 dark:bg-gray-700 dark:text-white rounded w-full p-2 mt-1"
               type="text"
               onChange={(e) => setName(e.target.value)}
               value={name}
@@ -120,7 +120,7 @@ const Login = ({ isOpen, setIsOpen }) => {
         <div className="w-full">
           <p>Email</p>
           <input
-            className="border border-zinc-300 rounded w-full p-2 mt-1"
+            className="border border-zinc-300 dark:bg-gray-700 dark:text-white rounded w-full p-2 mt-1"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
@@ -132,7 +132,7 @@ const Login = ({ isOpen, setIsOpen }) => {
         <div className="w-full">
           <p>Password</p>
           <input
-            className="border border-zinc-300 rounded w-full p-2 mt-1"
+            className="border border-zinc-300 dark:bg-gray-700 dark:text-white rounded w-full p-2 mt-1"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}

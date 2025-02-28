@@ -45,7 +45,7 @@ const MyProfile = () => {
   return (
     userData && (
       <>
-        <div className="mx-auto bg-white shadow-md rounded-md mt-10 border border-blue-600 relative">
+        <div className="mx-auto bg-white dark:bg-gray-900 shadow-md rounded-md mt-10 border border-blue-600 relative">
           <div className="flex flex-col p-6 items-center sm:flex-row sm:items-start">
             {isEdit ? (
               <label htmlFor="image">
@@ -55,7 +55,7 @@ const MyProfile = () => {
                     className="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"
                     src={
                       image
-                        ? URL.createObjectURL(image) 
+                        ? URL.createObjectURL(image)
                         : userData.image
                     }
                     alt="Profile Preview"
@@ -77,12 +77,12 @@ const MyProfile = () => {
                   id="image"
                   accept="image/*" // Allow only image uploads
                   hidden
-                  onChange={(e) => setImage(e.target.files[0])}   
+                  onChange={(e) => setImage(e.target.files[0])}
                 />
               </label>
             ) : (
               <img
-                src={userData.image} 
+                src={userData.image}
                 alt="Profile"
                 className="w-32 h-32 rounded-full border-2 border-gray-300 object-cover"
               />
@@ -93,13 +93,13 @@ const MyProfile = () => {
                 <input
                   type="text"
                   value={userData.name}
-                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none dark:bg-gray-600 focus:ring focus:ring-blue-200"
                   onChange={(e) =>
                     setUserData((prev) => ({ ...prev, name: e.target.value }))
                   }
                 />
               ) : (
-                <h2 className="text-xl font-bold text-gray-800">
+                <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                   {userData.name}
                 </h2>
               )}
@@ -110,32 +110,32 @@ const MyProfile = () => {
 
           <div className="grid grid-cols-1 p-6 sm:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-gray-600">Email:</h3>
-              <p className="text-blue-800">{userData.email}</p>
+              <h3 className="font-semibold text-gray-600 dark:text-white">Email:</h3>
+              <p className="text-gray-300">{userData.email}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-gray-600">Phone:</h3>
+              <h3 className="font-semibold text-gray-600 dark:text-white">Phone:</h3>
               {isEdit ? (
                 <input
                   type="text"
                   value={userData.phone}
-                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
+                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none dark:bg-gray-600 focus:ring focus:ring-blue-200"
                   onChange={(e) =>
                     setUserData((prev) => ({ ...prev, phone: e.target.value }))
                   }
                 />
               ) : (
-                <p className="text-gray-800">+91{userData.phone}</p>
+                <p className="text-gray-800 dark:text-gray-300">+91{userData.phone}</p>
               )}
             </div>
             <div className="col-span-2">
-              <h3 className="font-semibold text-gray-600">Address:</h3>
+              <h3 className="font-semibold text-gray-600 dark:text-white">Address:</h3>
               {isEdit ? (
                 <div className="space-y-2">
                   <input
                     type="text"
                     value={userData.address.line1}
-                    className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
+                    className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none dark:bg-gray-600 focus:ring focus:ring-blue-200"
                     onChange={(e) =>
                       setUserData((prev) => ({
                         ...prev,
@@ -146,7 +146,7 @@ const MyProfile = () => {
                   <input
                     type="text"
                     value={userData.address.line2}
-                    className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
+                    className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none dark:bg-gray-600 focus:ring focus:ring-blue-200"
                     onChange={(e) =>
                       setUserData((prev) => ({
                         ...prev,
@@ -156,7 +156,7 @@ const MyProfile = () => {
                   />
                 </div>
               ) : (
-                <p className="text-gray-800">
+                <p className="text-gray-800 dark:text-gray-200">
                   {userData.address.line1} <br />
                   {userData.address.line2}
                 </p>
@@ -168,35 +168,40 @@ const MyProfile = () => {
 
           <div className="grid grid-cols-1 p-6 sm:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-semibold text-gray-600">Gender:</h3>
+              <h3 className="font-semibold text-gray-600 dark:text-white">Gender:</h3>
               {isEdit ? (
                 <select
-                  value={userData.gender}
-                  className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
-                  onChange={(e) =>
-                    setUserData((prev) => ({ ...prev, gender: e.target.value }))
-                  }
+                  value={userData.gender ?? "Male"}
+                  className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none dark:bg-gray-600 focus:ring focus:ring-blue-200"
+                  onChange={(e) => {
+                    console.log("Selected Gender:", e.target.value);
+                    setUserData((prev) => ({
+                      ...prev,
+                      gender: e.target.value,
+                    }));
+                  }}
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
               ) : (
-                <p className="text-gray-800">{userData.gender}</p>
+                <p className="text-gray-800 dark:text-gray-200">{userData.gender}</p>
               )}
             </div>
+
             <div>
-              <h3 className="font-semibold text-gray-600">Birthday:</h3>
+              <h3 className="font-semibold text-gray-600 dark:text-white">Birthday:</h3>
               {isEdit ? (
                 <input
                   type="date"
                   value={userData.dob}
-                  className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring focus:ring-blue-200"
+                  className="w-full border border-gray-300 rounded-md px-3 py-1 focus:outline-none dark:bg-gray-600 focus:ring focus:ring-blue-200"
                   onChange={(e) =>
                     setUserData((prev) => ({ ...prev, dob: e.target.value }))
                   }
                 />
               ) : (
-                <p className="text-gray-800">{userData.dob}</p>
+                <p className="text-gray-800 dark:text-gray-200">{userData.dob}</p>
               )}
             </div>
           </div>
