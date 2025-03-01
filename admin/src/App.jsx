@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Login from './pages/Login.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -19,10 +19,28 @@ const App = () => {
   const {aToken} = useContext(AdminContext)
   const {dToken} = useContext(DoctorContext)
 
+  const [isDarkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
+
   return aToken || dToken ? (
-    <div>
+    <div className='bg-gray-50 dark:bg-gray-950 dark:text-white'>
       <ToastContainer />
-      <Navbar />
+      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
       <div className='flex items-start'>
         <Sidebar />
         <Routes>

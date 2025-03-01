@@ -14,32 +14,32 @@ const DoctorDashboard = () => {
   return (
     <div className='m-5'>
       <div className='flex flex-wrap gap-3'>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
+        <div className='flex items-center gap-2 bg-white dark:bg-gray-900 p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
           <img className='w-14' src={assets.earning_icon} alt="" />
           <div>
-            <p className='text-xl font-semibold text-gray-600'>{currency}{DashboardData.earnings}</p>
-            <p className='text-gray-500'>Earnings</p>
+            <p className='text-xl font-semibold text-gray-600 dark:text-white'>{currency}{DashboardData.earnings}</p>
+            <p className='text-gray-500 dark:text-gray-200'>Earnings</p>
           </div>
         </div>
 
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
+        <div className='flex items-center gap-2 bg-white dark:bg-gray-900 p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
           <img className='w-14' src={assets.appointments_icon} alt="" />
           <div>
-            <p className='text-xl font-semibold text-gray-600'>{DashboardData.appointments}</p>
-            <p className='text-gray-500'>Appointments</p>
+            <p className='text-xl font-semibold text-gray-600 dark:text-white'>{DashboardData.appointments}</p>
+            <p className='text-gray-500 dark:text-gray-200'>Appointments</p>
           </div>
         </div>
 
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
+        <div className='flex items-center gap-2 bg-white dark:bg-gray-900 p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all'>
           <img className='w-14' src={assets.patients_icon} alt="" />
           <div>
-            <p className='text-xl font-semibold text-gray-600'>{DashboardData.patients}</p>
-            <p className='text-gray-500'>Patients</p>
+            <p className='text-xl font-semibold text-gray-600 dark:text-white'>{DashboardData.patients}</p>
+            <p className='text-gray-500 dark:text-gray-200'>Patients</p>
           </div>
         </div>
       </div>
 
-      <div className='bg-white'>
+      <div className='bg-white dark:bg-gray-900'>
         <div className='flex items-center gap-2.5 px-4 py-4 mt-10 rounded-t border'>
           <img src={assets.list_icon} alt="" />
           <p className='font-semibold'>Latest Bookings</p>
@@ -48,12 +48,12 @@ const DoctorDashboard = () => {
         <div className='pt-4 border border-t-0'>
           {DashboardData.latestAppointments && DashboardData.latestAppointments.length > 0 ? (
             DashboardData.latestAppointments.map((item, index) => (
-              <div key={index} className='flex items-center px-6 py-3 gap-3 hover:bg-gray-200'>
+              <div key={index} className='flex items-center px-6 py-3 gap-3 hover:bg-gray-200 dark:hover:bg-gray-950'>
                 {/* Doctor Image */}
                 <img className='w-10 rounded-full bg-gray-100' src={item?.userData?.image} alt={item?.userData?.name} />
                 <div className='flex-1 text-sm'>
-                  <p className='font-medium text-gray-800'>{item?.userData?.name}</p>
-                  <p className='text-sm text-gray-600'>{slotDataFormat(item?.slotDate)}</p>
+                  <p className='font-medium text-gray-800 dark:text-white'>{item?.userData?.name}</p>
+                  <p className='text-sm text-gray-600 dark:text-gray-200'>{slotDataFormat(item?.slotDate)}</p>
                 </div>
 
 

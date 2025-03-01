@@ -20,8 +20,8 @@ const DoctorsList = () => {
             <div className='border border-indigo-200 rounded-xl max-w-56 overflow-hidden cursor-pointer group' key={index}>
               <img className="bg-indigo-50 group-hover:bg-blue-600 transition-all duration-500" src={item.image} alt="" />
               <div className="p-4">
-                <p className="text-neutral-800 text-lg font-medium">{item.name}</p>
-                <p className="text-zinc-600 text-sm">{item.speciality}</p>
+                <p className="text-neutral-800 dark:text-white text-lg font-medium">{item.name}</p>
+                <p className="text-zinc-600 dark:text-gray-200 text-sm">{item.speciality}</p>
                 <div className="mt-2 flex items-center gap-1 text-sm">
                   <input onChange={()=> changeAvailablity(item._id)} type="checkbox" checked={item.available}/>
                   <p>Available</p>
